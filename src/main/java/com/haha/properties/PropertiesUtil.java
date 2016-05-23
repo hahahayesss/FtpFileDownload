@@ -1,5 +1,7 @@
 package com.haha.properties;
 
+import org.quartz.SchedulerException;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,6 +19,19 @@ public class PropertiesUtil {
             props.load(propertyStream);
         } catch (FileNotFoundException e) {
         } catch (IOException e) {
+        }
+    }
+
+    public static Properties getQuartzProperties() throws SchedulerException {
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        try {
+            Properties properties2 = new Properties();
+            properties2.load(loader.getResourceAsStream("quartz.properties"));
+            properties2.putAll(props);
+
+            return properties2;
+        } catch (IOException e) {
+            throw new SchedulerException("cannot load default configuration", e);
         }
     }
 
@@ -45,8 +60,20 @@ public class PropertiesUtil {
         return props.getProperty("ftp.file.path");
     }
 
+    public static String getFtpFileNames() {
+        return props.getProperty("ftp.file.name");
+    }
+
     public static Integer getFtpDownloadLimit() {
         if (props.getProperty("ftp.file.download.limit").equals("")) return 25;
         else return Integer.parseInt(props.getProperty("ftp.file.download.limit"));
+    }
+
+    public static String getDownloadedFileLocation() {
+        return props.getProperty("downloaded.file.location");
+    }
+
+    public static String getLogPath() {
+        return props.getProperty("log.path");
     }
 }
