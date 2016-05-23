@@ -55,3 +55,5 @@ Example : <i>D:/FtpDownloaderLogFile/download.log</i></p>
 Default=0 0/5 * * * ?     //Every 5 min.<br>
 If you don't know what this is, You need to look this link.<br>
 http://www.quartz-scheduler.org/documentation/quartz-2.1.x/tutorials/crontrigger.html</p>
+
+<p>Sorry for my english.</p>
