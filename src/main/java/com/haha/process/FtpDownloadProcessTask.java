@@ -16,7 +16,7 @@ public class FtpDownloadProcessTask implements StatefulJob {
 
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         try {
-
+            logger.info("FtpDownload job");
             if (PropertiesUtil.getFtpServerAddress().equals("")) {
                 throw new Exception("ftp.server.address not found");
             }
@@ -37,9 +37,8 @@ public class FtpDownloadProcessTask implements StatefulJob {
                 throw new Exception("log.path not found");
             }
 
-            logger.info("Parser job");
             FileDownloader fileDownloader = new FileDownloader();
-            fileDownloader.downloaderMain();
+            fileDownloader.downloadFile();
         } catch (IOException e) {
             logger.error("Error :" + e.getMessage());
         } catch (Exception e) {

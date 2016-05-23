@@ -1,5 +1,6 @@
 package com.haha.main;
 
+import com.haha.logger.LogService;
 import com.haha.process.FtpDownloadProcessTask;
 import com.haha.properties.PropertiesUtil;
 import org.quartz.CronTrigger;
@@ -10,6 +11,7 @@ import org.quartz.impl.StdSchedulerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
 
@@ -17,12 +19,14 @@ public class FtpDownloader {
     private static Logger logger = LoggerFactory.getLogger(FtpDownloader.class);
     private static final String DEFAULT_JOB_EXPR = "0 0/5 * * * ?";
 
-    public static void main(String[] args) throws SchedulerException {
+    public static void main(String[] args) throws SchedulerException, IOException {
         if (args.length > 0) {
             PropertiesUtil.init(args[0]);
         } else {
             PropertiesUtil.init(null);
         }
+
+        LogService.logFilesCreate();
 
         StdSchedulerFactory stdFactory = new StdSchedulerFactory(PropertiesUtil.getQuartzProperties());
         final Scheduler scheduler = stdFactory.getScheduler();
